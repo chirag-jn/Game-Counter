@@ -1,3 +1,16 @@
 <resources>
     <string name="app_name">Game Counter</string>
+
+    <!--    Main Screen-->
+    <string name="start_player_cnt" translatable="false">1</string>
+    <string name="end_player_cnt" translatable="false">5</string>
+    <string name="incr_player_cnt" translatable="false">1</string>
+    <string name="start_points_cnt" translatable="false">1</string>
+    <string name="end_points_cnt" translatable="false">20</string>
+    <string name="incr_points_cnt" translatable="false">1</string>
+    <string name="limited_cnt">Limited</string>
+    <string name="infinite_cnt">Infinite</string>
+    <string name="max_points_round">Max Points per Round</string>
+    <string name="num_players">Number of Players</string>
+    <string name="start_game">Start Game</string>
 </resources>
