@@ -1,8 +1,11 @@
 package com.chiragjn.gamecounter
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.GridView
+import androidx.appcompat.app.AppCompatActivity
+import com.chiragjn.gamecounter.adapters.FinalScoreGridAdapter
+import com.chiragjn.gamecounter.adapters.PlayerNameGridAdapter
+import com.chiragjn.gamecounter.adapters.RoundScoreGridAdapter
 
 class GameActivity : AppCompatActivity() {
 
@@ -18,6 +21,7 @@ class GameActivity : AppCompatActivity() {
         setContentView(R.layout.activity_game)
 
         bindViews()
+        connectAdapters()
     }
 
     private fun bindViews() {
@@ -36,5 +40,16 @@ class GameActivity : AppCompatActivity() {
             roundScores.numColumns = numPlayers
             finalScores.numColumns = numPlayers
         }
+    }
+
+    private fun connectAdapters() {
+        val playerNameAdapter = PlayerNameGridAdapter(this)
+        playerNames.adapter = playerNameAdapter
+
+        val roundScoreAdapter = RoundScoreGridAdapter(this)
+        roundScores.adapter = roundScoreAdapter
+
+        val finalScoreAdapter = FinalScoreGridAdapter(this)
+        finalScores.adapter = finalScoreAdapter
     }
 }
