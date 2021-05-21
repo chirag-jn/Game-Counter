@@ -5,12 +5,16 @@ import android.widget.GridView
 import androidx.appcompat.app.AppCompatActivity
 import com.chiragjn.gamecounter.adapters.FinalScoreGridAdapter
 import com.chiragjn.gamecounter.adapters.PlayerNameGridAdapter
+import com.chiragjn.gamecounter.adapters.RoundScoreGridAdapter
 
 class GameActivity : AppCompatActivity() {
 
     private lateinit var playerNames: GridView
     private lateinit var roundScores: GridView
     private lateinit var finalScores: GridView
+
+    private var roundScoreAdapter: RoundScoreGridAdapter? = null
+    private var finalScoreAdapter: FinalScoreGridAdapter? = null
 
     var numPlayers = 0
     var maxScorePerRound = 0
@@ -50,14 +54,15 @@ class GameActivity : AppCompatActivity() {
 //        roundScores.adapter = roundScoreAdapter
 //
         val finalScoreInt = setFinalScore()
-        val finalScoreAdapter = FinalScoreGridAdapter(this, finalScoreInt)
+        finalScoreAdapter = FinalScoreGridAdapter(this, finalScoreInt)
         finalScores.adapter = finalScoreAdapter
+        finalScoreAdapter!!.updateScore(0, 10)
     }
 
     private fun setPlayerNames(): Array<String?> {
         val playerNamesStr = arrayOfNulls<String>(numPlayers)
         for (i in 0 until numPlayers) {
-            playerNamesStr[i] = "P" + (i+1)
+            playerNamesStr[i] = "P" + (i + 1)
         }
         return playerNamesStr
     }

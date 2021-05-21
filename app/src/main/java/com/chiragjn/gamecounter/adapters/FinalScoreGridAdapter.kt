@@ -43,4 +43,9 @@ internal class FinalScoreGridAdapter(
         textView.text = playerScores[position].toString()
         return cView
     }
+
+    fun updateScore(position: Int, score: Int) {
+        playerScores[position] = score
+        notifyDataSetChanged()
+    }
 }
