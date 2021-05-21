@@ -6,7 +6,7 @@
     android:padding="@dimen/grid_item_pad">
 
     <TextView
-        android:id="@+id/grid_name_item_tv"
+        android:id="@+id/grid_final_score_item_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 

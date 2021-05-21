@@ -1,12 +1,10 @@
 package com.chiragjn.gamecounter
 
 import android.os.Bundle
-import android.util.Log
 import android.widget.GridView
 import androidx.appcompat.app.AppCompatActivity
 import com.chiragjn.gamecounter.adapters.FinalScoreGridAdapter
 import com.chiragjn.gamecounter.adapters.PlayerNameGridAdapter
-import com.chiragjn.gamecounter.adapters.RoundScoreGridAdapter
 
 class GameActivity : AppCompatActivity() {
 
@@ -51,14 +49,23 @@ class GameActivity : AppCompatActivity() {
 //        val roundScoreAdapter = RoundScoreGridAdapter(this)
 //        roundScores.adapter = roundScoreAdapter
 //
-//        val finalScoreAdapter = FinalScoreGridAdapter(this)
-//        finalScores.adapter = finalScoreAdapter
+        val finalScoreInt = setFinalScore()
+        val finalScoreAdapter = FinalScoreGridAdapter(this, finalScoreInt)
+        finalScores.adapter = finalScoreAdapter
     }
 
     private fun setPlayerNames(): Array<String?> {
         val playerNamesStr = arrayOfNulls<String>(numPlayers)
         for (i in 0 until numPlayers) {
             playerNamesStr[i] = "P" + (i+1)
+        }
+        return playerNamesStr
+    }
+
+    private fun setFinalScore(): Array<Int?> {
+        val playerNamesStr = arrayOfNulls<Int>(numPlayers)
+        for (i in 0 until numPlayers) {
+            playerNamesStr[i] = 0
         }
         return playerNamesStr
     }
