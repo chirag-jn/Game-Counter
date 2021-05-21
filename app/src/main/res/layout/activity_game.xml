@@ -1,9 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:weightSum="10"
     tools:context=".GameActivity">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <GridView
+        android:id="@+id/player_names"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1.5"
+        android:gravity="center"
+        android:scrollbars="none"
+        android:stretchMode="columnWidth" />
+
+    <GridView
+        android:id="@+id/round_scores"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="7"
+        android:gravity="center"
+        android:scrollbars="vertical"
+        android:stretchMode="columnWidth" />
+
+    <GridView
+        android:id="@+id/final_scores"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1.5"
+        android:gravity="center"
+        android:scrollbars="none"
+        android:stretchMode="columnWidth" />
+
+</LinearLayout>
