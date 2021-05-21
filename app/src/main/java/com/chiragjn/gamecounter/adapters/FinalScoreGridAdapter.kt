@@ -48,4 +48,9 @@ internal class FinalScoreGridAdapter(
         playerScores[position] = score
         notifyDataSetChanged()
     }
+
+    fun incrementScore(position: Int, score: Int) {
+        playerScores[position] = playerScores[position]?.plus(score)
+        notifyDataSetChanged()
+    }
 }

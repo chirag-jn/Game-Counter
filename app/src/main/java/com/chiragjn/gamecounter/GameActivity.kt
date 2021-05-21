@@ -1,17 +1,20 @@
 package com.chiragjn.gamecounter
 
 import android.os.Bundle
+import android.widget.AdapterView.OnItemClickListener
 import android.widget.GridView
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.chiragjn.gamecounter.adapters.FinalScoreGridAdapter
 import com.chiragjn.gamecounter.adapters.PlayerNameGridAdapter
 import com.chiragjn.gamecounter.adapters.RoundScoreGridAdapter
+import com.google.android.material.slider.Slider
 
 class GameActivity : AppCompatActivity() {
 
-    private lateinit var playerNames: GridView
-    private lateinit var roundScores: GridView
-    private lateinit var finalScores: GridView
+    private lateinit var playerNamesGView: GridView
+    private lateinit var roundScoresGView: GridView
+    private lateinit var finalScoresGView: GridView
 
     private var roundScoreAdapter: RoundScoreGridAdapter? = null
     private var finalScoreAdapter: FinalScoreGridAdapter? = null
@@ -34,29 +37,30 @@ class GameActivity : AppCompatActivity() {
             maxScorePerRound = getInt(Constants.POINTS_PER_ROUND)
         }
 
-        playerNames = findViewById(R.id.player_names)
-        roundScores = findViewById(R.id.round_scores)
-        finalScores = findViewById(R.id.final_scores)
+        playerNamesGView = findViewById(R.id.player_names)
+        roundScoresGView = findViewById(R.id.round_scores)
+        finalScoresGView = findViewById(R.id.final_scores)
 
         if (numPlayers > 0) {
-            playerNames.numColumns = numPlayers
-            roundScores.numColumns = numPlayers
-            finalScores.numColumns = numPlayers
+            playerNamesGView.numColumns = numPlayers
+            roundScoresGView.numColumns = numPlayers
+            finalScoresGView.numColumns = numPlayers
         }
     }
 
     private fun connectAdapters() {
         val playerNamesStr = setPlayerNames()
         val playerNameAdapter = PlayerNameGridAdapter(this, playerNamesStr)
-        playerNames.adapter = playerNameAdapter
+        playerNamesGView.adapter = playerNameAdapter
 
-//        val roundScoreAdapter = RoundScoreGridAdapter(this)
-//        roundScores.adapter = roundScoreAdapter
-//
+        roundScoreAdapter = RoundScoreGridAdapter(this, numPlayers)
+        roundScoresGView.adapter = roundScoreAdapter
+        roundScoreAdapter!!.createNewRow()
+        roundScoreInitOnClickListener()
+
         val finalScoreInt = setFinalScore()
         finalScoreAdapter = FinalScoreGridAdapter(this, finalScoreInt)
-        finalScores.adapter = finalScoreAdapter
-        finalScoreAdapter!!.updateScore(0, 10)
+        finalScoresGView.adapter = finalScoreAdapter
     }
 
     private fun setPlayerNames(): Array<String?> {
@@ -73,5 +77,34 @@ class GameActivity : AppCompatActivity() {
             playerNamesStr[i] = 0
         }
         return playerNamesStr
+    }
+
+    private fun roundScoreInitOnClickListener() {
+        roundScoresGView.onItemClickListener = OnItemClickListener { _, _, position, _ ->
+            showNumChangeDialog(position)
+        }
+    }
+
+    private fun showNumChangeDialog(position: Int) {
+        val builder = AlertDialog.Builder(this)
+
+        val view = layoutInflater.inflate(R.layout.score_input_dialog, null)
+        val slider: Slider = view.findViewById(R.id.score_slider)
+        slider.valueFrom = -10f
+        slider.valueTo = 10f
+
+        builder.setView(view)
+
+        var input: Int
+
+        builder.setPositiveButton("Done") { _, _ ->
+            input = slider.value.toInt()
+            val playerFinalScore = roundScoreAdapter!!.updateScore(position, input)
+            roundScoreAdapter!!.checkLastElems()
+            finalScoreAdapter!!.updateScore(position % numPlayers, playerFinalScore)
+        }
+
+        val alertDialog: AlertDialog = builder.create()
+        alertDialog.show()
     }
 }
