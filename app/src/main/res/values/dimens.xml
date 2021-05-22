@@ -3,4 +3,9 @@
 
     <dimen name="grid_item_pad">8dp</dimen>
 
+    <!--    Number Picker-->
+    <dimen name="number_picker_pad">0dp</dimen>
+    <dimen name="number_picker_text_pad">8dp</dimen>
+    <dimen name="number_picker_text">18sp</dimen>
+
 </resources>

@@ -1,6 +1,7 @@
 package com.chiragjn.gamecounter
 
 import android.os.Bundle
+import android.util.Log
 import android.widget.AdapterView.OnItemClickListener
 import android.widget.GridView
 import android.widget.NumberPicker
@@ -9,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.chiragjn.gamecounter.adapters.FinalScoreGridAdapter
 import com.chiragjn.gamecounter.adapters.PlayerNameGridAdapter
 import com.chiragjn.gamecounter.adapters.RoundScoreGridAdapter
+import com.google.android.material.switchmaterial.SwitchMaterial
 
 class GameActivity : AppCompatActivity() {
 
@@ -90,6 +92,7 @@ class GameActivity : AppCompatActivity() {
 
         val view = layoutInflater.inflate(R.layout.score_input_dialog, null)
         val slider: NumberPicker = view.findViewById(R.id.score_slider)
+        val isPositiveSwitch: SwitchMaterial = view.findViewById(R.id.is_positive_switch)
 
         slider.minValue = 0
         slider.maxValue = maxScorePerRound
@@ -100,13 +103,24 @@ class GameActivity : AppCompatActivity() {
             slider.value = curValue.toInt()
         }
 
+        var isPositiveMultiplier: Int =
+            if (isPositiveSwitch.isChecked) 1
+            else -1
+
+        isPositiveSwitch.setOnCheckedChangeListener { _, isChecked ->
+            isPositiveMultiplier =
+                if (isChecked) 1
+                else -1
+        }
+
         builder.setView(view)
 
         var input: Int
 
         builder.setPositiveButton("Done") { _, _ ->
             input = slider.value
-            val playerFinalScore = roundScoreAdapter!!.updateScore(position, input)
+            val playerFinalScore =
+                roundScoreAdapter!!.updateScore(position, input * isPositiveMultiplier)
             roundScoreAdapter!!.checkLastElems()
             finalScoreAdapter!!.updateScore(position % numPlayers, playerFinalScore)
         }

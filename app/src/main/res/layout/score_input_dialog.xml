@@ -11,13 +11,18 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
-    <!--    <com.google.android.material.slider.Slider-->
-    <!--        android:id="@+id/score_slider"-->
-    <!--        android:layout_width="match_parent"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        android:stepSize="@string/incr_points_cnt"-->
-    <!--        android:valueFrom="@string/start_points_cnt"-->
-    <!--        android:valueTo="@string/end_points_cnt"-->
-    <!--        app:labelBehavior="withinBounds" />-->
+    <com.google.android.material.switchmaterial.SwitchMaterial
+        android:id="@+id/is_positive_switch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:checked="true"
+        android:padding="@dimen/number_picker_pad"
+        android:textOff="@string/negative"
+        android:textOn="@string/positive"
+        android:textSize="@dimen/number_picker_text"
+        android:thumb="@android:color/transparent"
+        app:showText="true"
+        app:thumbTextPadding="@dimen/number_picker_text_pad"
+        app:thumbTint="@android:color/transparent" />
 
 </LinearLayout>

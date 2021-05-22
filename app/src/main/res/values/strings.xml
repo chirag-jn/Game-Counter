@@ -13,4 +13,6 @@
     <string name="max_points_round">Max Points per Round</string>
     <string name="num_players">Number of Players</string>
     <string name="start_game">Start Game</string>
+    <string name="positive">Positive</string>
+    <string name="negative">Negative</string>
 </resources>
