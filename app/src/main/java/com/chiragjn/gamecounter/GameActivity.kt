@@ -3,12 +3,12 @@ package com.chiragjn.gamecounter
 import android.os.Bundle
 import android.widget.AdapterView.OnItemClickListener
 import android.widget.GridView
+import android.widget.NumberPicker
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.chiragjn.gamecounter.adapters.FinalScoreGridAdapter
 import com.chiragjn.gamecounter.adapters.PlayerNameGridAdapter
 import com.chiragjn.gamecounter.adapters.RoundScoreGridAdapter
-import com.google.android.material.slider.Slider
 
 class GameActivity : AppCompatActivity() {
 
@@ -89,16 +89,23 @@ class GameActivity : AppCompatActivity() {
         val builder = AlertDialog.Builder(this)
 
         val view = layoutInflater.inflate(R.layout.score_input_dialog, null)
-        val slider: Slider = view.findViewById(R.id.score_slider)
-        slider.valueFrom = -10f
-        slider.valueTo = 10f
+        val slider: NumberPicker = view.findViewById(R.id.score_slider)
+
+        slider.minValue = 0
+        slider.maxValue = maxScorePerRound
+        val curValue = roundScoreAdapter!!.getItem(position)
+        if (curValue == "+") {
+            slider.value = 0
+        } else {
+            slider.value = curValue.toInt()
+        }
 
         builder.setView(view)
 
         var input: Int
 
         builder.setPositiveButton("Done") { _, _ ->
-            input = slider.value.toInt()
+            input = slider.value
             val playerFinalScore = roundScoreAdapter!!.updateScore(position, input)
             roundScoreAdapter!!.checkLastElems()
             finalScoreAdapter!!.updateScore(position % numPlayers, playerFinalScore)

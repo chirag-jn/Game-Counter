@@ -2,7 +2,6 @@ package com.chiragjn.gamecounter.adapters
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -21,7 +20,7 @@ internal class RoundScoreGridAdapter(private val context: Context, private val n
         return scores!!.size
     }
 
-    override fun getItem(position: Int): Any {
+    override fun getItem(position: Int): String {
         return scores!![position]
     }
 
@@ -44,11 +43,13 @@ internal class RoundScoreGridAdapter(private val context: Context, private val n
         return cView
     }
 
-    fun getPlayerTotalScore(playerNum: Int): Int {
+    private fun getPlayerTotalScore(playerNum: Int): Int {
         var totalScore = 0
         for (i in 0 until scores!!.size) {
-            if (i % numPlayers == playerNum) {
-                totalScore += scores!![i].toInt()
+            if (scores!![i] != "+") {
+                if (i % numPlayers == playerNum) {
+                    totalScore += scores!![i].toInt()
+                }
             }
         }
         return totalScore
@@ -77,9 +78,5 @@ internal class RoundScoreGridAdapter(private val context: Context, private val n
         if (allDone) {
             createNewRow()
         }
-    }
-
-    override fun notifyDataSetChanged() {
-        super.notifyDataSetChanged()
     }
 }
